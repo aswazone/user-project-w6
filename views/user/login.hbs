@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="/styles/userlogin.css">
+
+<section>
+  <div class="signin">
+
+    <div class="content">
+
+      <h2>Login In</h2>
+      <h4 class="text-danger "><strong>{{msg}}</strong></h4>
+      <div class="form">
+        <form action="/verify" method="POST">
+          <div class="inputBox mb-3">
+
+            <input name="username" type="text" required />
+            <i>Username</i>
+
+          </div>
+
+          <div class="inputBox mb-3">
+
+            <input name="password" type="password" required />
+            <i>Password</i>
+
+          </div>
+
+          <div class="links mb-3">
+            <a href="#">Forgot Password</a>
+            <a href="#">Signup</a>
+
+          </div>
+
+          <div class="inputBox mb-3">
+
+            <input id="loginBtn" type="submit" value="Login" />
+
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

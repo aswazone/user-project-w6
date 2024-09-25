@@ -1,16 +1,27 @@
 const express = require('express');
-const { route } = require('./routes/user');
+const hbs = require('hbs');
+const path = require('path');
+
 const app = express();
+const PORT = 3000;
 
 //exporting routes
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 
-const PORT = 3000;
+//calling routes
+app.use('/user',userRoutes);
+app.use('/admin',adminRoutes);
 
 app.get('/',(req,res)=>{
     res.send('hellooooo..')
 })
+
+//setting view engine
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','hbs');
+//static folder enabling
+app.use(express.static('public'));
 
 app.listen(PORT,()=>{
     console.log(`server is running on ${PORT}`);

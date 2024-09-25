@@ -3,7 +3,7 @@ const express = require('express');
 //setting router
 const router = express.Router();
 
-router.get('/admin',(req,res)=>{
+router.get('/login',(req,res)=>{
     res.send('im admin');
 });
 
