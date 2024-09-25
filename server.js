@@ -1,5 +1,10 @@
 const express = require('express');
+const { route } = require('./routes/user');
 const app = express();
+
+//exporting routes
+const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
 
 const PORT = 3000;
 
