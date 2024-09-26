@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/styles/userlogin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css">
 
 <section>
   <div class="signin">
@@ -8,31 +9,31 @@
       <h2>Sign In</h2>
       <h4 class="text-danger "><strong>{{msg}}</strong></h4>
       <div class="form">
-        <form action="/verify" method="POST">
+        <form action="/register" methode="post">
           <div class="inputBox mb-3">
 
-            <input name="username" type="text" required />
+            <input id="username" name="username" type="text"/>
             <i>Username</i>
 
           </div>
 
           <div class="inputBox mb-3">
 
-            <input name="password" type="password" required />
+            <input id="password" name="password" type="password"/>
             <i>Password</i>
 
           </div>
 
           <div class="inputBox mb-3">
 
-            <input name="password" type="password" required />
+            <input id="confirmPassword" name="confirmPassword" type="password"/>
             <i>Confirm Password</i>
 
           </div>
 
           <div class="links mb-3">
             <a href="#">Forgot Password</a>
-            <a href="#">Signup</a>
+            <a href="/user/login">Login</a>
 
           </div>
 
@@ -49,3 +50,30 @@
   </div>
 
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelector('form').addEventListener('submit',formValidate);
+})
+
+  function formValidate(e){
+    console.log('asdfsdfsdf')
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if(username == '' || password == '' || confirmPassword == ''){
+      console.log('sdfsdfsdfsdfsdfsdfsdfsdfsf')
+      Swal.fire('All fields are require !!');
+      return false;
+    }else if(password != confirmPassword){
+      Swal.fire('Password unmatched !!');
+      return false;
+    }
+    e.target.submit();
+    return true;
+  }
+  
+</script>
