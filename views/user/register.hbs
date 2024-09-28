@@ -1,15 +1,14 @@
 <link rel="stylesheet" href="/styles/userlogin.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css">
-
 <section>
   <div class="signin">
 
     <div class="content">
 
       <h2>Sign In</h2>
-      <h4 class="text-danger "><strong>{{msg}}</strong></h4>
+      {{!-- <h4 class="text-danger "><strong>{{msg}}</strong></h4> --}}
+      <input type="text" id="message" value="{{{message}}}" name="message" hidden>
       <div class="form">
-        <form action="/register" methode="post">
+        <form action="/user/register" method="post">
           <div class="inputBox mb-3">
 
             <input id="username" name="username" type="text"/>
@@ -56,6 +55,22 @@
   document.querySelector('form').addEventListener('submit',formValidate);
 })
 
+const message = document.getElementById('message').value;
+
+if(message == 'User created successfully'){
+    Swal.fire({
+      icon: 'success',
+      title: 'Oops...',
+      text: message
+    });
+}else if(message == 'User already exists'){
+    Swal.fire({
+      icon: 'info',
+      title: 'Oops...',
+      text: message
+    });
+}
+
   function formValidate(e){
     console.log('asdfsdfsdf')
     e.preventDefault();
@@ -74,6 +89,7 @@
     }
     e.target.submit();
     return true;
+    console.log('validate')
   }
   
 </script>

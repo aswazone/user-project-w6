@@ -6,9 +6,9 @@
     <div class="content">
 
       <h2>Login In</h2>
-      <h4 class="text-danger "><strong>{{msg}}</strong></h4>
+      <input type="text" id="message" value="{{{message}}}" name="message" hidden>
       <div class="form">
-        <form action="/verify" method="POST">
+        <form action="/login" method="POST">
           <div class="inputBox mb-3">
 
             <input id="username" name="username" type="text" required />
@@ -42,3 +42,20 @@
   </div>
 
 </section>
+<script>
+const message = document.getElementById('message').value;
+
+if(message == 'User created successfully'){
+    Swal.fire({
+      icon: 'success',
+      title: 'Oops...',
+      text: message
+    });
+}else if(message == 'User already exists'){
+    Swal.fire({
+      icon: 'info',
+      title: 'Oops...',
+      text: message
+    });
+}
+</script>

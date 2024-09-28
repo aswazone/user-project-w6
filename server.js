@@ -6,26 +6,30 @@ const connectDB = require('./db/connectDB')
 const app = express();
 const PORT = 3000;
 
+//setting url stringfy
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
 //exporting routes
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
-
-//calling routes
-app.use('/user',userRoutes);
-app.use('/admin',adminRoutes);
-
-//connecting mongoDB
-connectDB();
-
-app.get('/',(req,res)=>{
-    res.send('hellooooo..')
-})
 
 //setting view engine
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','hbs');
 //static folder enabling
 app.use(express.static('public'));
+
+//connecting mongoDB
+connectDB();
+
+//calling routes
+app.use('/user',userRoutes);
+app.use('/admin',adminRoutes);
+
+app.get('/',(req,res)=>{
+    res.send('hellooooo..')
+})
 
 app.listen(PORT,()=>{
     console.log(`server is running on ${PORT}`);
