@@ -1,10 +1,20 @@
 const express = require('express');
+const app = express();
 const hbs = require('hbs');
 const path = require('path');
 const connectDB = require('./db/connectDB')
+const session = require('express-session')
+const nocache = require('nocache')
+app.use(nocache());
 
-const app = express();
 const PORT = 3000;
+
+//setting session
+app.use(session({
+    secret:'keyboard cat',
+    resave:false,
+    saveUninitialized:true
+}))
 
 //setting url stringfy
 app.use(express.urlencoded({extended:true}))

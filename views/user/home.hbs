@@ -1,0 +1,90 @@
+<head>
+  <style>
+    body{
+        background-color: #b1b1b185;
+    }
+    .card{
+        background-color: #e1dddd1f;
+        backdrop-filter: blur(5px);
+        box-shadow: -7px 10px 7px 0px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<input type="text" id="message" value="{{{message}}}" name="message" hidden>
+<nav class="nav navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/stack-icon.png" width ="30" height="24" alt=""></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <a href="/user/logout" class="btn btn-danger" type="submit">logout</a>
+      </form>
+    </div>
+  </div>
+</nav>
+<section class="main">
+  <div class="container">
+    <h2 class="jumbotron-heading my-3">Tutorials...</h2>
+    <div class="d-flex justify-content-center row gap-3">
+        <div class="card" style="width: 18rem;">
+        <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/html-icon.png" class="card-img-top mt-2" alt="...">
+        <div class="card-body">
+            <p class="card-text"><strong>Hypertext Markup Language</strong> (HTML) structures web content with tags, elements, and attributes, forming the backbone of websites and web applications.</p>
+        </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+        <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/css-icon.png" class="card-img-top mt-2" alt="...">
+        <div class="card-body">
+            <p class="card-text"><strong>Cascading Style Sheets</strong> (CSS) control visual styling, layout, and user experience, enhancing HTML content with colors, fonts, and responsive design.</p>
+        </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+        <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/javascript-programming-language-icon.png" class="card-img-top mt-4" alt="...">
+        <div class="card-body">
+            <p class="card-text"><strong>JavaScript</strong> (JS) adds interactivity, dynamic effects, and functional logic to web pages, enabling responsive user experiences and interactive web applications.</p>
+        </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+        <img src="https://hazelcast.com/wp-content/uploads/2021/12/node2.png" class="card-img-top mt-4" alt="...">
+        <div class="card-body">
+            <p class="card-text"><strong>Node.js</strong> enables server-side JavaScript, allowing developers to build scalable, fast, and data-driven applications, APIs, and microservices with JavaScript everywhere.</p>
+        </div>
+        </div>
+    </div>
+  </div>
+</section>
+<script>
+    const message = document.getElementById('message').value;
+if(message == 'Login successful'){
+    Swal.fire({
+      icon: 'success',
+      title: 'Oops...',
+      text: message
+    });
+}
+</script>

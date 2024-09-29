@@ -8,17 +8,17 @@
       <h2>Login In</h2>
       <input type="text" id="message" value="{{{message}}}" name="message" hidden>
       <div class="form">
-        <form action="/login" method="POST">
+        <form action="/user/login" method="post">
           <div class="inputBox mb-3">
 
-            <input id="username" name="username" type="text" required />
+            <input id="username" name="username" type="text"/>
             <i>Username</i>
 
           </div>
 
           <div class="inputBox mb-3">
 
-            <input id="password" name="password" type="password" required />
+            <input id="password" name="password" type="password"/>
             <i>Password</i>
 
           </div>
@@ -31,7 +31,7 @@
 
           <div class="inputBox mb-3">
 
-            <input id="loginBtn" type="submit" value="Login" />
+            <input id="loginBtn" type="submit" value="Login in" />
 
           </div>
         </form>
@@ -42,20 +42,43 @@
   </div>
 
 </section>
-<script>
-const message = document.getElementById('message').value;
 
-if(message == 'User created successfully'){
+
+
+<script>
+  document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelector('form').addEventListener('submit',formValidate);
+})
+const message = document.getElementById('message').value;
+if(message == 'User created successfully'||message == 'Login successful'){
     Swal.fire({
       icon: 'success',
       title: 'Oops...',
       text: message
     });
-}else if(message == 'User already exists'){
+}else if(message == 'User already exists'||message == 'Password incorrect'||message == 'User not found'||message == 'Something went wrong'){
     Swal.fire({
       icon: 'info',
       title: 'Oops...',
       text: message
     });
 }
+
+  function formValidate(e){
+    console.log('frm-lgn-validate')
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if(username == '' || password == ''){
+      console.log('login')
+      Swal.fire('All fields are require !!');
+      return false;
+    }
+    e.target.submit();
+    console.log('validate-login')
+    return true;
+  }
+  
 </script>
