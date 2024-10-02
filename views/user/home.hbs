@@ -10,7 +10,9 @@
     }
   </style>
 </head>
-<input type="text" id="message" value="{{{message}}}" name="message" hidden>
+{{#if user}}
+  <input type="text" id="message" value="{{user.username}} login Successful!!" name="message" hidden>
+{{/if}}
 <nav class="nav navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><img src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/stack-icon.png" width ="30" height="24" alt=""></a>
@@ -80,7 +82,7 @@
 </section>
 <script>
     const message = document.getElementById('message').value;
-if(message == 'Login successful'){
+if(message){
     Swal.fire({
       icon: 'success',
       title: 'Oops...',

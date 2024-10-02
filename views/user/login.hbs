@@ -7,6 +7,8 @@
 
       <h2>Login In</h2>
       <input type="text" id="message" value="{{{message}}}" name="message" hidden>
+      <input type="text" id="success" value="{{{success}}}" name="message" hidden>
+      
       <div class="form">
         <form action="/user/login" method="post">
           <div class="inputBox mb-3">
@@ -50,17 +52,19 @@
   document.querySelector('form').addEventListener('submit',formValidate);
 })
 const message = document.getElementById('message').value;
-if(message == 'User created successfully'||message == 'Login successful'){
-    Swal.fire({
-      icon: 'success',
-      title: 'Oops...',
-      text: message
-    });
-}else if(message == 'User already exists'||message == 'Password incorrect'||message == 'User not found'||message == 'Something went wrong'){
+const success = document.getElementById('success').value;
+if(message){
     Swal.fire({
       icon: 'info',
       title: 'Oops...',
       text: message
+    });
+}
+if(success){
+    Swal.fire({
+      icon: 'success',
+      title: 'Thanks for Visting..',
+      text: success
     });
 }
 

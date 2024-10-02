@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="/styles/userlogin.css">
+
+<section>
+  <div class="signin">
+
+    <div class="content">
+
+      <h2>Admin Login</h2>
+      <input type="text" id="message" value="{{{message}}}" name="message" hidden>
+      <div class="form">
+        <form action="/admin/login" method="post">
+          <div class="inputBox mb-3">
+
+            <input id="username" name="username" type="text"/>
+            <i>Username</i>
+
+          </div>
+
+          <div class="inputBox mb-3">
+
+            <input id="password" name="password" type="password"/>
+            <i>Password</i>
+
+          </div>
+
+          <div class="links mb-3">
+            <a href="#">Forgot Password</a>
+            <a href="/user/register">SignIn</a>
+
+          </div>
+
+          <div class="inputBox mb-3">
+
+            <input id="loginBtn" type="submit" value="Login in" />
+
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelector('form').addEventListener('submit',formValidate);
+})
+const message = document.getElementById('message').value;
+if(message){
+    Swal.fire({
+      icon: 'info',
+      title: 'Oops...',
+      text: message
+    });
+}
+
+  function formValidate(e){
+    console.log('frm-lgn-validate')
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if(username == '' || password == ''){
+      console.log('login')
+      Swal.fire('All fields are require !!');
+      return false;
+    }
+    e.target.submit();
+    console.log('validate-login')
+    return true;
+  }
+  
+</script>

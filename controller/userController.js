@@ -10,20 +10,21 @@ const registerUser = async (req,res)=>{
         console.log(req.body)
         const user = await userSchema.findOne({username});
         
+        req.session.registerError = 'User already exists !!'
         //checking if user exists
-        if(user) return res.render('user/register', {message: 'User already exists'})
+        if(user) return res.redirect('/user/register')
         
         //after finding user
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-        console.log(`hashedPassword : ${hashedPassword}`);
-        
-        //creating new user
-        const newUser = new userSchema({
-            username,
-            password: hashedPassword
-        });
-        await newUser.save();
-        res.render('user/login',{message: 'User created successfully'});
+        await bcrypt.hash(password, saltRounds).then(async(hashedPassword)=>{
+            //creating new user
+            const newUser = new userSchema({
+                username,
+                password: hashedPassword
+            });
+            await newUser.save();
+        })
+        req.session.user = {username: req.body.username}
+        res.redirect('/user/home');
         
     } catch (error) {
         res.render('user/register', {message: 'Something went wrong'})
@@ -39,40 +40,58 @@ const login = async (req,res)=>{
         
         const {username,password} = req.body;
         const user = await userSchema.findOne({username});
-        console.log(user)
-        if(!user) return res.render('user/login', {message: 'User not found'})
-        
+        if(!user){
+            req.session.loginError = 'Invalid Username !!'
+            return res.redirect('user/login')
+        }
         //checking password = hashedPassword
-        const isMatch = await bcrypt.compare(password, user.password);
-        console.log(isMatch)
-        
-        if(!isMatch) return res.render('user/login', {message: 'Password incorrect'})
+        await bcrypt.compare(password, user.password).then((isMatch)=>{
+            if(!isMatch){
+                req.session.loginError = 'Invalid Password !!'
+                console.log(req.session, " invalid");
+                
+                return res.redirect('/user/login')
+            }else{
+                //setting session
+                
+                req.session.user = user;
+                console.log(req.session);
+                //login successful  
+                res.redirect('/user/home');
+            }
+        })
 
-        //setting session
-        req.session.user = true
-        //login successful  
-        res.redirect('/user/home');
+
 
     }catch(error){
         console.log('erroor');
-        
-        res.render('user/login', {message: 'Something went wrong'})
+        req.session.loginError = 'Something went wrong !!'
+        res.render('user/login', {message: req.session.registerError})
     }
 }
 const loadRegister = async (req,res)=>{
-    res.render('user/register');
+    res.render('user/register',{message: req.session.loginError});
+    if(req.session.registerError){
+        req.session.registerError = null
+    }
 }
 
 const loadLogin = async (req,res)=>{
-    res.render('user/login');
+    console.log(req.session)
+    res.render('user/login',{message: req.session.loginError,success: req.session.logoutSuccess});
+    if(req.session.loginError || req.session.logoutSuccess){
+        req.session.loginError = null
+        req.session.logoutSuccess = null
+    }
 }
 
 const loadHome  = async (req,res)=>{
     // res.render('user/userHome')
-    res.render('user/home', {message: 'Login successful'})
+    res.render('user/home',{user: req.session.user});
 }
 const logout = async (req,res)=>{
     req.session.user = null
+    req.session.logoutSuccess = "logout successfully"
     res.redirect('/user/login');
 }
 

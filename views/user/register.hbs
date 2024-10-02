@@ -57,13 +57,7 @@
 
 const message = document.getElementById('message').value;
 
-if(message == 'User created successfully'){
-    Swal.fire({
-      icon: 'success',
-      title: 'Oops...',
-      text: message
-    });
-}else if(message == 'User already exists'){
+if(message){
     Swal.fire({
       icon: 'info',
       title: 'Oops...',
