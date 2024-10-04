@@ -79,8 +79,11 @@ header .right a:hover{
 }
 
 .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0px 16px;
     color: #aaa;
-    float: right;
     font-size: 28px;
     font-weight: bold;
 }
