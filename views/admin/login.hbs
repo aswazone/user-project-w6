@@ -25,13 +25,13 @@
 
           <div class="links mb-3">
             <a href="#">Forgot Password</a>
-            <a href="/user/register">SignIn</a>
+            {{!-- <a href="/user/register">SignIn</a> --}}
 
           </div>
 
           <div class="inputBox mb-3">
 
-            <input id="loginBtn" type="submit" value="Login in" />
+            <input id="loginBtn" type="submit" value="LogIn" />
 
           </div>
         </form>
@@ -55,6 +55,15 @@ if(message){
       icon: 'info',
       title: 'Oops...',
       text: message
+    });
+}
+
+const success = document.getElementById('success').value;
+if(success){
+    Swal.fire({
+      icon: 'success',
+      title: 'Thanks for Visting..',
+      text: success
     });
 }
 

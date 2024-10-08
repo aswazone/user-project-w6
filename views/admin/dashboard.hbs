@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="/styles/dashboard.css">
-{{#if adminMessage}}
-<input type="text" id="message" value="{{{adminMessage}}}" name="message" hidden>
-{{/if}}
+
+
 <input type="text" id="success" value="{{success}}" name="success" hidden>
 
 
@@ -11,7 +10,7 @@
             <h3 class="d-flex">Admin <span class="d-none d-md-flex ">Dashboard</span></h3>
         </div>
         <div class="center d-flex align-items-center col-5">
-            <input class="w-100" id="search" type="text" placeholder="Search...">
+            <input class="w-100" id="search" type="search" placeholder="Search...">
             <i class="fa-solid fa-magnifying-glass"></i>
         </div>
         <div class="right col-3 d-flex justify-content-end">
@@ -24,7 +23,7 @@
             <i class="fa-solid fa-user-plus"></i>
             <span>Add User</span>
         </button>
-        <table class="table table-dark table-sm px-5">
+        <table class="table table-dark table-sm px-5" id="table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -79,8 +78,8 @@
     </div>
 
 <script>
-const success = document.getElementById('success').value;
-const message = document.getElementById('message').value;
+const success = document.getElementById('success').value
+//const message = document.getElementById('message').value
 console.log(success)
 if(success){
     Swal.fire({
@@ -89,13 +88,49 @@ if(success){
       text: success
     });
 } 
-if(message){
-    Swal.fire({
-      icon: 'success',
-      title: 'Oops...',
-      text: message
-    });
-} 
+
+        const search = document.getElementById('search');
+        const table = document.getElementById('table');
+
+        search.addEventListener('input',(e)=>{
+            console.log(e.target.value)
+            fetch('/admin/search-users',{
+                method: 'post',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    search: e.target.value
+                })
+            })
+            .then((res)=>res.json())
+            .then((data)=>{
+                table.innerHTML = '';
+                console.log(data)
+                data.map((user)=>{
+
+                const element = `
+                <tbody>
+                
+                <tr>
+                    <td>{{@index}}</td>
+                    <td>${user.username}</td>
+                    <td class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-success" onclick="openEditUserModal('${user.id}', '${user.username}')">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteUser('{{this.id}}')">Delete</button>
+                    </td>
+                </tr>
+                
+            </tbody>`
+
+                table.innerHTML += element
+
+                    
+                })
+            })
+            
+        })
+
 
         // Open and close Add User Modal
         function openAddUserModal() {

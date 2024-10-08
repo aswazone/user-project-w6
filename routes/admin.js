@@ -9,5 +9,7 @@ router.get('/dashboard',adminAuth.checkSession,adminController.loadDashboard);
 router.post('/edit-user',adminAuth.checkSession,adminController.editUser)
 router.get('/delete-user/:id',adminAuth.checkSession,adminController.deleteUser)
 router.post('/add-user',adminAuth.checkSession,adminController.addUser)
+router.post('/search-users',adminController.searchUsers)
+router.get('/logout',adminAuth.checkSession,adminController.logout);
 
 module.exports = router;

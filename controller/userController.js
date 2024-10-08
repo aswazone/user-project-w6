@@ -70,7 +70,7 @@ const login = async (req,res)=>{
     }
 }
 const loadRegister = async (req,res)=>{
-    res.render('user/register',{message: req.session.loginError});
+    res.render('user/register',{message: req.session.registerError});
     if(req.session.registerError){
         req.session.registerError = null
     }
@@ -79,9 +79,11 @@ const loadRegister = async (req,res)=>{
 const loadLogin = async (req,res)=>{
     console.log(req.session)
     res.render('user/login',{message: req.session.loginError,success: req.session.logoutSuccess});
-    if(req.session.loginError || req.session.logoutSuccess){
-        req.session.loginError = null
+    if(req.session.logoutSuccess){
         req.session.logoutSuccess = null
+    }
+    if(req.session.loginError){
+        req.session.loginError = null
     }
 }
 

@@ -5,10 +5,14 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const loadLogin = async (req,res)=>{
-    res.render('admin/login',{message: req.session.loginError});
+    res.render('admin/login',{message: req.session.loginError,success:req.session.logoutSuccess});
     if(req.session.loginError){
         req.session.loginError = null;
     }
+    if(req.session.logoutSuccess){
+        req.session.logoutSuccess = null;
+    }
+    
 }
 const login = async (req,res)=>{
     try {
@@ -23,7 +27,7 @@ const login = async (req,res)=>{
                 return res.redirect('/admin/login');
              }else{
                  req.session.admin = true;
-                 req.session.adminSuccess = 'Admin Login successful!!'
+                 req.session.success = 'Admin Login successful!!'
                  res.redirect('/admin/dashboard');
              }
         });
@@ -46,12 +50,10 @@ const loadDashboard = async (req, res) => {
         const users = await userModel.find({})
         // console.log(users);
         
-        res.render('admin/dashboard',{users,success: req.session.createSuccess,adminMessage: req.session.adminSuccess,success: req.session.deleteSuccess,success: req.session.editSuccess});
+        res.render('admin/dashboard',{users,success: req.session.success});
 
-        req.session.createSuccess = req.session.createSuccess ? null : req.session.createSuccess;
-        req.session.adminSuccess = req.session.adminSuccess ? null : req.session.adminSuccess;
-        req.session.deleteSuccess = req.session.deleteSuccess ? null : req.session.deleteSuccess;
-        req.session.editSuccess = req.session.editSuccess ? null : req.session.editSuccess;
+        req.session.success = req.session.success ? null : req.session.success;
+        // req.session.message = req.session.message ? null : req.session.message;
 
 
     } catch (error) {
@@ -69,7 +71,7 @@ const editUser = async (req, res) => {
             {$set:{username,password:hashedPassword}}
         )
 
-        req.session.editSuccess = 'User Updated successfully!!'
+        req.session.success = 'User Updated successfully!!'
         res.redirect('/admin/dashboard')
     
     } catch (error) {
@@ -83,7 +85,7 @@ const deleteUser = async (req, res) => {
         const {id}= req.params
         const user = await userModel.findOneAndDelete({_id:id})
 
-        req.session.deleteSuccess = 'User Deleted successfully!!'
+        req.session.success = 'User Deleted successfully!!'
         res.redirect('/admin/dashboard')
         
     } catch (error) {
@@ -104,18 +106,32 @@ const addUser = async (req,res)=>{
         })
 
         await newUser.save()
-        req.session.createSuccess = 'User Creation successfully!!'
+        req.session.success = 'User Creation successfully!!'
         res.redirect('/admin/dashboard')
         
     } catch (error) {
         console.log(error);
     }
 }
+const searchUsers = async (req,res)=>{
+
+    const regex = new RegExp(`^${req.body.search}`, 'i');
+    const users = await userModel.find({username: regex});
+    res.json(users)
+}
+const logout = async (req,res)=>{
+    req.session.admin = null;
+    req.session.logoutSuccess = "logout successfully"
+    res.redirect('/admin/login');
+}
+
 module.exports = {
     loadLogin,
     login,
     loadDashboard,
     editUser,
     deleteUser,
-    addUser
+    addUser,
+    searchUsers,
+    logout
 }
